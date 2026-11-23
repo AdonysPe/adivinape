@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Game from '../components/game/Game';
+---
+
+<Layout title="Jugando · AdivinaPe" bare>
+  <Game variant="play" client:load />
+  <noscript>
+    <p class="p-8 text-center font-display text-yellow">AdivinaPe necesita JavaScript para jugar.</p>
+  </noscript>
+</Layout>
