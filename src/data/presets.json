@@ -1,0 +1,7 @@
+[
+  { "label": "Modo fiesta", "ids": ["celebridades", "musica", "acciones"] },
+  { "label": "Pantalla", "ids": ["peliculas", "series", "personajes"] },
+  { "label": "Para niños", "ids": ["personajes", "animales", "comida", "acciones"] },
+  { "label": "Viajeros", "ids": ["lugares", "comida", "deportes"] },
+  { "label": "Todo", "ids": ["*"] }
+]
