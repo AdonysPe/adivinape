@@ -1,0 +1,66 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Game-only page: no scroll progress bar, kept out of search results. */
+  bare?: boolean;
+}
+const {
+  title = 'AdivinaPe — Charadas para jugar con amigos',
+  description = 'Charadas online gratis: arma equipos, gira la ruleta y actúa. Famosos, películas, series, música y más. ¡Sin roche!',
+  bare = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content={bare ? '#15151C' : '#0B0B0F'} />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AdivinaPe" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {bare && <meta name="robots" content="noindex" />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Rubik:wght@500;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class:list={[bare && 'is-app bg-panel']}>
+    {
+      !bare && (
+        <div
+          class="scroll-progress fixed inset-x-0 top-0 z-50 h-1.5 origin-left scale-x-0 bg-linear-to-r from-pink via-yellow to-cyan"
+          aria-hidden="true"
+        />
+      )
+    }
+    <slot />
+    <script>
+      // Any element with data-open-game opens the game setup; data-sel preselects categories,
+      // data-quick starts a quick game. The React island listens for these events.
+      document.addEventListener('click', (e) => {
+        const el = (e.target as HTMLElement).closest<HTMLElement>('[data-open-game]');
+        if (!el) return;
+        const sel = el.dataset.sel ? el.dataset.sel.split(',') : undefined;
+        const quick = el.dataset.quick !== undefined;
+        window.dispatchEvent(new CustomEvent('adivina:open', { detail: { sel, quick } }));
+      });
+    </script>
+  </body>
+</html>

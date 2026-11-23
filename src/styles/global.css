@@ -1,0 +1,189 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #0b0b0f;
+  --color-panel: #15151c;
+  --color-field: #1e1e28;
+  --color-line: #3a3a4a;
+  --color-pink: #ff2e93;
+  --color-pink-deep: #c40062;
+  --color-yellow: #ffe600;
+  --color-green: #00e676;
+  --color-cyan: #00b8ff;
+  --color-orange: #ff7a00;
+  --color-violet: #b388ff;
+  --color-mist: #d8d8e0;
+  --color-muted: #a8a8b8;
+
+  --font-display: 'Bungee', 'Impact', system-ui, sans-serif;
+  --font-shade: 'Bungee Shade', 'Bungee', system-ui, sans-serif;
+  --font-body: 'Rubik', system-ui, sans-serif;
+}
+
+/* A phone lying on its side: wide but very short. */
+@custom-variant landscape-phone (@media (orientation: landscape) and (max-height: 540px));
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background: var(--color-ink);
+    color: #fff;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--color-ink);
+    overflow-x: clip;
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* No double-tap zoom delay on anything tappable. */
+  a, button, input, label, [role='option'] {
+    touch-action: manipulation;
+  }
+  /* The game page behaves like an app: no rubber-band refresh, no accidental text selection. */
+  body.is-app {
+    overscroll-behavior: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  body.is-app input {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  ::selection {
+    background: var(--color-pink);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-yellow);
+    outline-offset: 3px;
+  }
+  input::placeholder {
+    color: #6e6e80;
+  }
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+/* ---------- Load / loop animations ---------- */
+@keyframes flicker { 0%, 18%, 22%, 62%, 64%, 100% { opacity: 1 } 20%, 63% { opacity: .55 } }
+@keyframes bounce-in {
+  0% { opacity: 0; transform: translateY(-120px) rotate(-8deg) scale(.6) }
+  60% { opacity: 1; transform: translateY(14px) rotate(3deg) scale(1.05) }
+  80% { transform: translateY(-6px) rotate(-1deg) }
+  100% { transform: none }
+}
+@keyframes wobble { 0%, 100% { transform: rotate(-3deg) } 50% { transform: rotate(3deg) } }
+@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+@keyframes hue { to { filter: hue-rotate(360deg) } }
+@keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: .25 } }
+@keyframes pulse-soft { 0%, 100% { transform: scale(1) } 50% { transform: scale(1.08) } }
+@keyframes shake { 0%, 100% { transform: translateX(0) } 20% { transform: translateX(-6px) } 40% { transform: translateX(6px) } 60% { transform: translateX(-4px) } 80% { transform: translateX(4px) } }
+@keyframes fall { 0% { transform: translateY(-10vh) rotate(0) } 100% { transform: translateY(110vh) rotate(720deg) } }
+@keyframes crown { 0%, 100% { transform: translateY(0) rotate(-8deg) } 50% { transform: translateY(-10px) rotate(8deg) } }
+
+.anim-flicker { animation: flicker 4s linear infinite }
+.anim-bounce { animation: bounce-in 1.1s cubic-bezier(.3, 1.4, .5, 1) both }
+.anim-wobble { animation: wobble 2.6s ease-in-out infinite }
+.anim-marquee { animation: marquee 22s linear infinite }
+.anim-marquee-rev { animation: marquee 26s linear infinite reverse }
+.anim-hue { animation: hue 8s linear infinite }
+.anim-blink { animation: blink 1s steps(1) infinite }
+.anim-pulse { animation: pulse-soft .9s ease-in-out infinite }
+.anim-shake { animation: shake .5s ease-in-out infinite }
+.anim-fall { animation: fall linear infinite }
+.anim-crown { animation: crown 1.4s ease-in-out infinite }
+.delay-1 { animation-delay: .15s }
+.delay-2 { animation-delay: .3s }
+.delay-3 { animation-delay: .45s }
+
+/* ---------- Chunky buttons ---------- */
+.btn-chunky {
+  transition: transform .2s cubic-bezier(.3, 1.6, .5, 1);
+  cursor: pointer;
+}
+.btn-chunky:hover:not(:disabled) { transform: translateY(-3px) rotate(-1deg) }
+.btn-chunky:active:not(:disabled) { transform: translateY(2px) scale(.97) }
+.poster { transition: transform .35s cubic-bezier(.3, 1.6, .5, 1) }
+.poster:hover { transform: rotate(-2deg) scale(1.04) }
+
+/* ---------- Scroll-driven animations (progressive enhancement) ---------- */
+@keyframes sr-up { from { opacity: 0; transform: translateY(90px) rotate(-3deg) scale(.92) } to { opacity: 1; transform: none } }
+@keyframes sr-left { from { opacity: 0; transform: translateX(-160px) rotate(-6deg) } to { opacity: 1; transform: none } }
+@keyframes sr-right { from { opacity: 0; transform: translateX(160px) rotate(6deg) } to { opacity: 1; transform: none } }
+@keyframes sr-zoom { from { opacity: 0; transform: scale(.4) rotate(-18deg) } to { opacity: 1; transform: none } }
+@keyframes parallax { from { transform: translateX(8%) rotate(-2deg) } to { transform: translateX(-22%) rotate(-2deg) } }
+@keyframes parallax-rev { from { transform: translateX(-22%) rotate(1.5deg) } to { transform: translateX(8%) rotate(1.5deg) } }
+@keyframes progress { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+
+@supports (animation-timeline: view()) {
+  .sr-up, .sr-left, .sr-right, .sr-zoom {
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 32%;
+  }
+  .sr-up { animation-name: sr-up }
+  .sr-left { animation-name: sr-left }
+  .sr-right { animation-name: sr-right }
+  .sr-zoom { animation-name: sr-zoom; animation-range: entry 0% cover 40% }
+  .parallax, .parallax-rev {
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+  .parallax { animation-name: parallax }
+  .parallax-rev { animation-name: parallax-rev }
+  .scroll-progress {
+    animation: progress linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+/* ---------- Discreet page change: landing → /jugar ---------- */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root) {
+  animation: vt-out 0.3s cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(root) {
+  animation: vt-in 0.45s cubic-bezier(0, 0, 0.2, 1) both;
+}
+::view-transition-group(brand) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.brand {
+  view-transition-name: brand;
+}
+@keyframes vt-out {
+  to { opacity: 0; transform: scale(0.985); filter: blur(6px) }
+}
+@keyframes vt-in {
+  from { opacity: 0; transform: scale(1.015) }
+}
+/* Fallback fade for browsers without cross-document view transitions */
+html.is-leaving body {
+  opacity: 0;
+  filter: blur(4px);
+  transition: opacity 0.25s ease, filter 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

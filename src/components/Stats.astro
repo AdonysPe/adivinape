@@ -1,0 +1,20 @@
+---
+import { CATEGORIES, TOTAL_WORDS, MAX_TEAMS } from '../lib/game';
+const stats = [
+  { value: String(CATEGORIES.length), label: 'Categorías', color: 'text-pink' },
+  { value: String(TOTAL_WORDS), label: 'Palabras', color: 'text-yellow' },
+  { value: String(MAX_TEAMS), label: 'Equipos máximo', color: 'text-green' },
+  { value: '∞', label: 'Combinaciones', color: 'text-cyan' },
+];
+---
+
+<section class="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 pt-16 sm:grid-cols-[repeat(auto-fit,minmax(220px,1fr))] sm:px-6 sm:pt-22 text-center">
+  {
+    stats.map((s) => (
+      <div class="sr-zoom">
+        <p class:list={['m-0 font-display text-[clamp(56px,16vw,88px)] leading-none', s.color]}>{s.value}</p>
+        <p class="m-0 mt-1.5 font-display text-sm uppercase sm:text-lg">{s.label}</p>
+      </div>
+    ))
+  }
+</section>

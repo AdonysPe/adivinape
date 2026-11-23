@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Marquees from '../components/Marquees.astro';
+import Stats from '../components/Stats.astro';
+import Categories from '../components/Categories.astro';
+import HowTo from '../components/HowTo.astro';
+import Game from '../components/game/Game';
+---
+
+<Layout>
+  <Nav />
+  <main>
+    <Hero />
+    <Marquees />
+    <Game client:load />
+    <Stats />
+    <Categories />
+    <HowTo />
+  </main>
+  <footer class="px-6 py-8 text-center font-display text-sm text-muted">
+    ADIVINAPE · HECHO CON CARIÑO EN LIMA · ¡NO TE ROCHEES!
+  </footer>
+</Layout>

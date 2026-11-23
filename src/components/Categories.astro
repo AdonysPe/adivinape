@@ -1,0 +1,50 @@
+---
+import { CATEGORIES, fullPool } from '../lib/game';
+const posters = CATEGORIES.map((c) => {
+  const pool = fullPool(c);
+  return {
+    ...c,
+    count: pool.length,
+    unit: c.genres ? 'cartas' : 'palabras',
+    examples: c.genres ? c.genres.map((g) => g.name).slice(0, 3).join(', ') : pool.slice(0, 3).map((x) => x.w).join(', '),
+  };
+});
+---
+
+<section id="categorias" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+  <h2 class="sr-up m-0 font-shade text-[clamp(40px,6vw,72px)] leading-none text-yellow">ELIGE TU AFICHE</h2>
+  <p class="sr-up mt-3 text-xl font-bold text-mist">
+    Juega una sola o mézclalas al armar la partida. Todo se reconoce en cualquier parte del mundo.
+  </p>
+  <div class="mt-12 grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-6 sm:gap-7">
+    {
+      posters.map((c) => (
+        <div class="sr-up">
+          <article
+            class="poster flex min-h-62 flex-col justify-between p-6.5 text-ink"
+            style={`background:${c.color};box-shadow:8px 8px 0 ${c.shadow}`}
+          >
+            <div class="flex justify-between font-display text-sm uppercase">
+              <span>{c.tag}</span>
+              <span>
+                {c.count} {c.unit}
+              </span>
+            </div>
+            <div>
+              <h3 class="m-0 font-display text-4xl leading-[0.95] uppercase">{c.name}</h3>
+              <p class="mt-2.5 text-base font-bold">{c.examples}…</p>
+              <a
+                href="#jugar"
+                data-open-game
+                data-sel={c.id}
+                class="btn-chunky mt-4 inline-block bg-ink px-4 py-2.5 font-display text-[15px] text-white no-underline"
+              >
+                JUGAR ESTA →
+              </a>
+            </div>
+          </article>
+        </div>
+      ))
+    }
+  </div>
+</section>

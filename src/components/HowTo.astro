@@ -1,0 +1,32 @@
+---
+const steps = [
+  { n: '1', title: 'Arma', text: 'Crea los equipos y mezcla las categorías que quieras.', color: '#FF2E93', anim: 'sr-left' },
+  { n: '2', title: 'Gira', text: 'La ruleta elige la categoría de cada turno. Sin discutir.', color: '#00B8FF', anim: 'sr-up' },
+  { n: '3', title: 'Actúa', text: 'Gestos sí, palabras no. ¡ACERTÉ! o PASO, rapidito.', color: '#FFFFFF', anim: 'sr-up' },
+  { n: '4', title: 'Gana', text: 'Al final de las rondas: podio, corona y confeti.', color: '#00E676', anim: 'sr-right' },
+];
+---
+
+<section id="como" class="bg-yellow px-4 pt-16 pb-[max(64px,env(safe-area-inset-bottom))] text-ink sm:px-6 sm:py-24">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="sr-up m-0 font-display text-[clamp(40px,6vw,72px)] leading-none">ASÍ DE RÁPIDO</h2>
+    <div class="mt-12 grid grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-6 sm:gap-7">
+      {
+        steps.map((s) => (
+          <div class:list={[s.anim, 'bg-ink p-7 text-white']} style={`box-shadow:8px 8px 0 ${s.color}`}>
+            <p class="m-0 font-display text-6xl leading-none" style={`color:${s.color === '#FFFFFF' ? '#FFE600' : s.color}`}>
+              {s.n}
+            </p>
+            <h3 class="m-0 mt-3 font-display text-[26px] uppercase">{s.title}</h3>
+            <p class="mt-2 text-[17px] font-bold text-mist">{s.text}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="sr-up mt-12 text-lg font-bold">
+      Atajos durante el turno: <kbd class="bg-ink px-2 py-1 font-display text-sm text-yellow">→</kbd> o
+      <kbd class="bg-ink px-2 py-1 font-display text-sm text-yellow">Espacio</kbd> para ¡Acerté!, y
+      <kbd class="bg-ink px-2 py-1 font-display text-sm text-yellow">←</kbd> para Paso.
+    </p>
+  </div>
+</section>

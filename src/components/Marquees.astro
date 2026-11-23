@@ -1,0 +1,14 @@
+---
+import { CATEGORIES } from '../lib/game';
+const shouts = '¡CHÉVERE! ★ ¡ASU MARE! ★ ¡QUÉ PALTA! ★ ¡HABLA CAUSA! ★ ¡BACÁN! ★ ¡DE UNA! ★ ';
+const cats = CATEGORIES.map((c) => c.name.toUpperCase()).join(' · ') + ' · ';
+---
+
+<div aria-hidden="true" class="overflow-hidden py-4">
+  <div class="parallax -mx-50 -rotate-2 overflow-hidden bg-pink py-3.5 whitespace-nowrap">
+    <div class="anim-marquee inline-block font-display text-[28px] text-ink">{shouts.repeat(4)}</div>
+  </div>
+  <div class="parallax-rev -mx-50 -mt-1.5 rotate-[1.5deg] overflow-hidden bg-green py-3 whitespace-nowrap">
+    <div class="anim-marquee-rev inline-block font-display text-[22px] text-ink">{cats.repeat(4)}</div>
+  </div>
+</div>
