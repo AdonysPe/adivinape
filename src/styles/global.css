@@ -145,6 +145,22 @@
   }
 }
 
+/* ---------- Snow (Navidad): flakes drawn as the element's own background, so text stays on top ---------- */
+.snow {
+  background-image:
+    radial-gradient(circle at 20% 30%, var(--flake, #fff) 0 3px, transparent 3.8px),
+    radial-gradient(circle at 72% 58%, var(--flake, #fff) 0 2px, transparent 2.8px),
+    radial-gradient(circle at 42% 82%, var(--flake, #fff) 0 4.5px, transparent 5.3px),
+    radial-gradient(circle at 85% 12%, var(--flake, #fff) 0 2.4px, transparent 3.2px);
+  background-size: 70px 90px, 48px 64px, 110px 130px, 84px 100px;
+  background-repeat: repeat;
+  animation: snow-fall 9s linear infinite;
+}
+@keyframes snow-fall {
+  from { background-position: 0 0, 0 0, 0 0, 0 0 }
+  to { background-position: 0 90px, 0 64px, 0 130px, 0 100px }
+}
+
 /* ---------- Discreet page change: landing → /jugar ---------- */
 @view-transition {
   navigation: auto;

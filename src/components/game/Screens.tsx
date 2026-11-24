@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, type Dispatch } from 'react';
+import { useEffect, useMemo, useRef, type CSSProperties, type Dispatch } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useMotionValue, useTransform } from 'motion/react';
 import Wheel from './Wheel';
@@ -105,8 +105,8 @@ function ReadyCard({ s, dispatch, sheet = false }: P & { sheet?: boolean }) {
   const selWords = s.sel.reduce((a, id) => a + wordPool(id, s).length, 0);
   return (
     <div
-      className={`text-ink ${sheet ? 'p-5 shadow-[0_-8px_40px_rgba(0,0,0,.6),6px_6px_0_#fff]' : 'p-6.5 shadow-[10px_10px_0_#fff]'}`}
-      style={{ background: mezcla ? '#FFE600' : c.color }}
+      className={`text-ink ${!mezcla && c.id === 'navidad' ? 'snow' : ''} ${sheet ? 'p-5 shadow-[0_-8px_40px_rgba(0,0,0,.6),6px_6px_0_#fff]' : 'p-6.5 shadow-[10px_10px_0_#fff]'}`}
+      style={{ backgroundColor: mezcla ? '#FFE600' : c.color, '--flake': '#8CCBFF' } as CSSProperties}
     >
       <p className="m-0 font-display text-[15px]">{mezcla ? 'MEZCLA TOTAL' : '¡TE TOCÓ!'}</p>
       <p className={`m-0 mt-1.5 font-display leading-[0.95] uppercase ${sheet ? 'text-[clamp(28px,9vw,40px)]' : 'text-[42px]'}`}>
@@ -268,7 +268,7 @@ function SwipeCard({ card, color, onSwipe }: { card: Card; color: string; onSwip
 
   return (
     <motion.div
-      className="absolute inset-0 flex cursor-grab touch-pan-y flex-col items-center justify-center overflow-hidden bg-yellow px-4 py-6 text-center text-ink active:cursor-grabbing sm:px-6 sm:py-10 landscape-phone:py-3"
+      className={`absolute inset-0 flex cursor-grab touch-pan-y flex-col items-center justify-center overflow-hidden bg-yellow px-4 py-6 text-center text-ink active:cursor-grabbing sm:px-6 sm:py-10 landscape-phone:py-3 ${card.c === 'navidad' ? 'snow' : ''}`}
       style={{ x, rotate }}
       drag="x"
       dragSnapToOrigin

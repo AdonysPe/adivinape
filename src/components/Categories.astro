@@ -21,8 +21,8 @@ const posters = CATEGORIES.map((c) => {
       posters.map((c) => (
         <div class="sr-up">
           <article
-            class="poster flex min-h-62 flex-col justify-between p-6.5 text-ink"
-            style={`background:${c.color};box-shadow:8px 8px 0 ${c.shadow}`}
+            class:list={['poster flex min-h-62 flex-col justify-between p-6.5 text-ink', c.id === 'navidad' && 'snow']}
+            style={`background-color:${c.color};box-shadow:8px 8px 0 ${c.shadow};--flake:#8CCBFF`}
           >
             <div class="flex justify-between font-display text-sm uppercase">
               <span>{c.tag}</span>
