@@ -3,5 +3,6 @@
   { "label": "Pantalla", "ids": ["peliculas", "series", "personajes"] },
   { "label": "Para niños", "ids": ["personajes", "animales", "comida", "acciones"] },
   { "label": "Viajeros", "ids": ["lugares", "comida", "deportes"] },
+  { "label": "Navidad", "ids": ["navidad", "musica", "acciones"] },
   { "label": "Todo", "ids": ["*"] }
 ]
