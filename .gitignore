@@ -22,3 +22,8 @@ pnpm-debug.log*
 .idea/
 .claude/
 .vercel/
+
+# trailer render temp files
+trailer/stills/
+trailer/.trailer-audio*.wav
+trailer/*.mp4

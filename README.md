@@ -85,6 +85,19 @@ Los equipos y reglas se recuerdan en el navegador (`localStorage`) para la próx
 - **Acostado**: carta a la izquierda, botones a la derecha (variante `landscape-phone` en `global.css`).
 - **Instalable**: `public/manifest.webmanifest` permite «Agregar a pantalla de inicio», con íconos PNG de 192 y 512 px (normal y *maskable* para Android) y `apple-touch-icon.png` de 180 px para iPhone. Todos salen de `favicon.svg`: si cambias el logo, regenéralos con el mismo diseño.
 
+## Tráiler
+
+`trailer/index.html` es un tráiler de ~33 s (animaciones + música sintetizada) y `trailer/render.mjs` lo convierte a MP4 con Chrome y ffmpeg. Los totales y la ruleta salen de `src/data/categories.json`: si cambian las categorías, actualiza `CATS` en el HTML. El render falla con un aviso si los números ya no coinciden.
+
+```bash
+npm i --no-save puppeteer-core   # una sola vez (no se guarda en package.json)
+node trailer/render.mjs                    # 1920×1080, 60 fps → ~/Downloads/AdivinaPe-trailer/
+node trailer/render.mjs --vertical         # 1080×1920 para Reels/TikTok/Shorts
+node trailer/render.mjs --stills 2,9,20,30 # PNGs para revisar antes de renderizar
+```
+
+Los MP4 y los stills quedan fuera del repo (en `~/Downloads/AdivinaPe-trailer/` y `trailer/stills/`).
+
 ## Publicar
 
 Es un sitio estático: `npm run build` y sube `dist/` a Vercel, Netlify o Cloudflare Pages. En Vercel basta con importar el repo; detecta Astro solo.
