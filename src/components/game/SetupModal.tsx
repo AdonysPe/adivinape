@@ -145,9 +145,9 @@ export default function SetupModal({ s, dispatch, onStart }: Props) {
     }
   };
 
-  const selWords = s.sel.reduce((a, id) => a + wordPool(id, s).length, 0);
+  const selWords = s.sel.reduce((a, id) => a + wordPool(id, s, 3).length, 0);
   const musicOn = s.sel.includes(MUSIC_ID);
-  const genreCount = (gid: string) => wordPool(MUSIC_ID, { musicGenres: [gid], musicLevel: s.musicLevel }).length;
+  const genreCount = (gid: string) => wordPool(MUSIC_ID, { musicGenres: [gid], musicLevel: s.musicLevel }, 3).length;
   const inGame = s.phase !== 'idle';
   const n = s.sel.length;
   const summary = [
@@ -419,7 +419,7 @@ export default function SetupModal({ s, dispatch, onStart }: Props) {
                     {on ? '✓' : '+'} {c.short}
                   </span>
                   <span className="font-body text-xs font-bold normal-case">
-                    {wordPool(c.id, s).length} {c.genres ? 'canciones y más' : 'palabras'}
+                    {wordPool(c.id, s, 3).length} {c.genres ? 'canciones y más' : 'palabras'}
                   </span>
                 </motion.button>
               );
@@ -525,7 +525,7 @@ export default function SetupModal({ s, dispatch, onStart }: Props) {
                     })}
                   </div>
                   <p className="m-0 text-sm font-bold text-mist">
-                    {wordPool(MUSIC_ID, s).length} cartas de música en juego. Quien actúa ve el artista como pista.
+                    {wordPool(MUSIC_ID, s, 3).length} cartas de música en juego. Quien actúa ve el artista como pista.
                   </p>
                 </div>
               </motion.div>
@@ -588,6 +588,9 @@ export default function SetupModal({ s, dispatch, onStart }: Props) {
                 </Toggle>
               ))}
             </div>
+            <p className="m-0 text-xs font-bold text-mist">
+              Ronda 1 fácil · ronda 2 media · ronda 3+ difícil.
+            </p>
           </section>
         </div>
 

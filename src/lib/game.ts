@@ -4,8 +4,8 @@ import presetsData from '../data/presets.json';
 
 export type Song = { w: string; a?: string; d: 1 | 2 | 3 };
 export type Genre = { id: string; name: string; color: string; songs: Song[] };
-/** A word with help for whoever acts it out: `h` says who/what it is, `k` gives 2–3 key clues. */
-export type WordEntry = { w: string; h?: string; k?: string[] };
+/** A word with help for whoever acts it out: `h` says who/what it is, `k` gives 2–3 key clues, `d` is the level 1–3. */
+export type WordEntry = { w: string; h?: string; k?: string[]; d?: 1 | 2 | 3 };
 export type Category = {
   id: string;
   short: string;
@@ -52,24 +52,46 @@ export const LEVELS: { id: Level; label: string; desc: string }[] = [
 ];
 const levelOk = (level: Level, d: number) => (level === 'facil' ? d === 1 : level === 'dificil' ? d >= 2 : true);
 
+/** Level the deck aims for each round: 1 = easy, 2 = medium, 3+ = hard. */
+export const roundTier = (round: number): 1 | 2 | 3 => (round <= 1 ? 1 : round === 2 ? 2 : 3);
+export const LEVEL_NAMES = ['', 'FÁCIL', 'MEDIA', 'DIFÍCIL'] as const;
+export const levelName = (round: number) => LEVEL_NAMES[roundTier(round)];
+
+/**
+ * Order the cards so a round leads with its own level and falls back to easier
+ * ones when that tier runs out. Never promotes a harder card into an early round.
+ */
+function forRound(cards: Card[], round: number): Card[] {
+  const tier = roundTier(round);
+  const groups = [1, 2, 3].map((d) => shuffle(cards.filter((x) => (x.d ?? 2) === d)));
+  if (tier === 1) return groups[0].length ? groups[0] : cards;
+  const order = tier === 2 ? [1, 0] : [2, 1, 0];
+  const out = order.flatMap((i) => groups[i]);
+  return out.length ? out : cards; // e.g. Música en modo Fácil: only level 1 exists
+}
+
 /** Every card a category can ever deal, ignoring filters (for counts and examples on the landing). */
 export function fullPool(c: Category): Card[] {
   if (c.genres?.length) return c.genres.flatMap((g) => g.songs.map((s) => ({ w: s.w, c: c.id, hint: s.a, d: s.d })));
-  return c.words.map((x) => (typeof x === 'string' ? { w: x, c: c.id } : { w: x.w, c: c.id, hint: x.h, keys: x.k }));
+  return c.words.map((x) =>
+    typeof x === 'string'
+      ? { w: x, c: c.id, d: 2 }
+      : { w: x.w, c: c.id, hint: x.h, keys: x.k, d: x.d ?? 2 },
+  );
 }
 
 type MusicPrefs = { musicGenres: string[]; musicLevel: Level };
 
-/** The cards a category deals with the current music genres and level applied. */
-export function wordPool(id: string, prefs: MusicPrefs): Card[] {
+/** The cards a category deals with the music prefs and the current round's level applied. */
+export function wordPool(id: string, prefs: MusicPrefs, round = 1): Card[] {
   const c = cat(id);
-  if (!c.genres?.length) return fullPool(c);
+  if (!c.genres?.length) return forRound(fullPool(c), round);
   const genres = c.genres.filter((g) => prefs.musicGenres.includes(g.id));
   const chosen = genres.length ? genres : c.genres;
   const toCards = (filter: (s: Song) => boolean) =>
     chosen.flatMap((g) => g.songs.filter(filter).map((s) => ({ w: s.w, c: c.id, hint: s.a, d: s.d })));
   const cards = toCards((s) => levelOk(prefs.musicLevel, s.d));
-  return cards.length ? cards : toCards(() => true); // never deal an empty deck
+  return forRound(cards.length ? cards : toCards(() => true), round); // never deal an empty deck
 }
 
 export const TOTAL_WORDS = CATEGORIES.reduce((a, c) => a + fullPool(c).length, 0);
@@ -127,13 +149,14 @@ export function fillNames(teams: Team[]): Team[] {
 
 export const cardKey = (x: Card) => `${x.c}:${x.w}`;
 
-/** Shuffled deck from the given categories, skipping cards already played this game until few remain. */
+/** Shuffled deck from the given categories and round, skipping cards already played this game until few remain. */
 export function buildDeck(
   ids: string[],
   prefs: MusicPrefs,
   used: Record<string, true>,
+  round = 1,
 ): { deck: Card[]; used: Record<string, true> } {
-  const pool: Card[] = ids.flatMap((id) => wordPool(id, prefs));
+  const pool: Card[] = ids.flatMap((id) => wordPool(id, prefs, round));
   let fresh = pool.filter((x) => !used[cardKey(x)]);
   let nextUsed = used;
   if (fresh.length < 8) {
@@ -254,7 +277,7 @@ function advance(s: GameState, field: 'hits' | 'passes'): GameState {
   let deck = s.deck;
   let pos = s.pos + 1;
   if (pos >= deck.length) {
-    const built = buildDeck(turnCats(s), s, used);
+    const built = buildDeck(turnCats(s), s, used, s.round);
     deck = built.deck;
     used = built.used;
     pos = 0;
@@ -340,7 +363,7 @@ export function reducer(s: GameState, a: Action): GameState {
       return s.phase === 'spinning' ? { ...s, phase: 'ready' } : s;
     case 'startTurn': {
       if (s.phase !== 'ready') return s;
-      const { deck, used } = buildDeck(turnCats(s), s, s.used);
+      const { deck, used } = buildDeck(turnCats(s), s, s.used, s.round);
       return { ...s, phase: 'playing', deck, used, pos: 0, hits: [], passes: [], timeLeft: s.dur };
     }
     case 'tick':

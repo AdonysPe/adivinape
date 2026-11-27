@@ -159,17 +159,17 @@ function flicker(el, from, len) { A(el, [{ opacity: 1 }, { opacity: 1, offset: .
 
 /* ---------- Data (from src/data; render.mjs checks the totals) ---------- */
 const CATS = [
-  { id: 'celebridades', short: 'Famosos', name: 'Celebridades', tag: 'Estrellas', color: '#FF2E93', shadow: '#FFE600', n: '56 palabras', ex: 'Shakira, Messi, Cristiano Ronaldo' },
-  { id: 'peliculas', short: 'Pelis', name: 'Películas', tag: 'Cine', color: '#FF7A00', shadow: '#00B8FF', n: '56 palabras', ex: 'Titanic, El Rey León, Harry Potter' },
-  { id: 'series', short: 'Series', name: 'Series y TV', tag: 'Pantalla', color: '#00E676', shadow: '#FF2E93', n: '49 palabras', ex: 'Friends, Los Simpson, Stranger Things' },
-  { id: 'musica', short: 'Música', name: 'Música y baile', tag: 'Con ritmo', color: '#FFE600', shadow: '#FF7A00', n: '195 cartas', ex: 'Latino y reguetón, Pop, Rock' },
-  { id: 'personajes', short: 'Personajes', name: 'Personajes', tag: 'Íconos', color: '#00B8FF', shadow: '#00E676', n: '55 palabras', ex: 'Mickey Mouse, Batman, Superman' },
-  { id: 'animales', short: 'Animales', name: 'Animales', tag: 'Salvaje', color: '#B388FF', shadow: '#FFE600', n: '52 palabras', ex: 'León, Elefante, Canguro' },
-  { id: 'deportes', short: 'Deportes', name: 'Deportes', tag: 'A sudar', color: '#FF5C5C', shadow: '#00B8FF', n: '50 palabras', ex: 'Fútbol, Tenis, Natación' },
-  { id: 'comida', short: 'Comida', name: 'Comida del mundo', tag: 'Con hambre', color: '#C6FF00', shadow: '#FF2E93', n: '50 palabras', ex: 'Pizza, Sushi, Hamburguesa' },
-  { id: 'acciones', short: 'Acciones', name: 'Acciones', tag: 'Manos a la obra', color: '#FF80AB', shadow: '#00E676', n: '51 palabras', ex: 'Cepillarse los dientes, Pescar' },
-  { id: 'lugares', short: 'Lugares', name: 'Lugares del mundo', tag: 'De viaje', color: '#40C4FF', shadow: '#FF7A00', n: '51 palabras', ex: 'Torre Eiffel, Machu Picchu' },
-  { id: 'navidad', short: 'Navidad', name: 'Navidad', tag: 'Felices fiestas', color: '#F4F7FF', shadow: '#FF2E3E', n: '64 palabras', ex: 'Árbol de Navidad, Panetón, Villancicos' },
+  { id: 'celebridades', short: 'Famosos', name: 'Celebridades', tag: 'Estrellas', color: '#FF2E93', shadow: '#FFE600', n: '81 palabras', ex: 'Shakira, Messi, Cristiano Ronaldo' },
+  { id: 'peliculas', short: 'Pelis', name: 'Películas', tag: 'Cine', color: '#FF7A00', shadow: '#00B8FF', n: '81 palabras', ex: 'Titanic, El Rey León, Harry Potter' },
+  { id: 'series', short: 'Series', name: 'Series y TV', tag: 'Pantalla', color: '#00E676', shadow: '#FF2E93', n: '74 palabras', ex: 'Friends, Los Simpson, Stranger Things' },
+  { id: 'musica', short: 'Música', name: 'Música y baile', tag: 'Con ritmo', color: '#FFE600', shadow: '#FF7A00', n: '216 cartas', ex: 'Latino y reguetón, Pop, Rock' },
+  { id: 'personajes', short: 'Personajes', name: 'Personajes', tag: 'Íconos', color: '#00B8FF', shadow: '#00E676', n: '80 palabras', ex: 'Mickey Mouse, Batman, Superman' },
+  { id: 'animales', short: 'Animales', name: 'Animales', tag: 'Salvaje', color: '#B388FF', shadow: '#FFE600', n: '77 palabras', ex: 'León, Elefante, Canguro' },
+  { id: 'deportes', short: 'Deportes', name: 'Deportes', tag: 'A sudar', color: '#FF5C5C', shadow: '#00B8FF', n: '75 palabras', ex: 'Fútbol, Tenis, Natación' },
+  { id: 'comida', short: 'Comida', name: 'Comida del mundo', tag: 'Con hambre', color: '#C6FF00', shadow: '#FF2E93', n: '75 palabras', ex: 'Pizza, Sushi, Hamburguesa' },
+  { id: 'acciones', short: 'Acciones', name: 'Acciones', tag: 'Manos a la obra', color: '#FF80AB', shadow: '#00E676', n: '76 palabras', ex: 'Cepillarse los dientes, Pescar' },
+  { id: 'lugares', short: 'Lugares', name: 'Lugares del mundo', tag: 'De viaje', color: '#40C4FF', shadow: '#FF7A00', n: '76 palabras', ex: 'Torre Eiffel, Machu Picchu' },
+  { id: 'navidad', short: 'Navidad', name: 'Navidad', tag: 'Felices fiestas', color: '#F4F7FF', shadow: '#FF2E3E', n: '89 palabras', ex: 'Árbol de Navidad, Panetón, Villancicos' },
 ];
 /** Counts from the posters above; render.mjs fails loudly if they drift from src/data/categories.json. */
 const DATA_TOTALS = {

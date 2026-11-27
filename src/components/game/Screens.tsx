@@ -8,6 +8,7 @@ import {
   cat,
   currentCard,
   isLastTurn,
+  levelName,
   ranking,
   teamColor,
   teamLabel,
@@ -101,8 +102,8 @@ function ReadyCard({ s, dispatch, sheet = false }: P & { sheet?: boolean }) {
   const mezcla = s.mode === 'mezcla';
   const c = cat(s.cat);
   const n = s.sel.length;
-  const pool = wordPool(s.cat, s);
-  const selWords = s.sel.reduce((a, id) => a + wordPool(id, s).length, 0);
+  const pool = wordPool(s.cat, s, s.round);
+  const selWords = s.sel.reduce((a, id) => a + wordPool(id, s, s.round).length, 0);
   return (
     <div
       className={`text-ink ${!mezcla && c.id === 'navidad' ? 'snow' : ''} ${sheet ? 'p-5 shadow-[0_-8px_40px_rgba(0,0,0,.6),6px_6px_0_#fff]' : 'p-6.5 shadow-[10px_10px_0_#fff]'}`}
@@ -112,6 +113,9 @@ function ReadyCard({ s, dispatch, sheet = false }: P & { sheet?: boolean }) {
       <p className={`m-0 mt-1.5 font-display leading-[0.95] uppercase ${sheet ? 'text-[clamp(28px,9vw,40px)]' : 'text-[42px]'}`}>
         {mezcla ? `${n} ${n === 1 ? 'categoría' : 'categorías'}` : c.name}
       </p>
+      <span className="mt-2 inline-block bg-ink px-2 py-0.5 font-display text-xs text-yellow">
+        RONDA {s.round} · NIVEL {levelName(s.round)}
+      </span>
       <p className="mt-2 mb-0 text-[15px] font-bold sm:text-base">
         {mezcla
           ? `${selWords} palabras revueltas · ${s.dur} segundos`
@@ -210,7 +214,7 @@ export function TurnSetup({ s, dispatch }: P) {
                 }}
                 transition={{ ...spring, delay: k * 0.12 }}
               >
-                <span className="font-display text-xs">{wordPool(id, s).length} CARTAS</span>
+                <span className="font-display text-xs">{wordPool(id, s, s.round).length} CARTAS</span>
                 <span className="font-display text-[clamp(20px,6vw,28px)] leading-[0.95] uppercase">{cc.name}</span>
               </motion.div>
             );
