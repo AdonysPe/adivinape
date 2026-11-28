@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { levelName, teamColor, teamLabel, type GameState } from '../../lib/game';
+import { teamColor, teamLabel, type GameState } from '../../lib/game';
 
 type Props = { s: GameState; onSettings: () => void };
 
@@ -18,13 +18,12 @@ export default function Scoreboard({ s, onSettings }: Props) {
 
   return (
     <div className="mb-3 flex items-center gap-2 sm:mb-10 sm:gap-4 landscape-phone:mb-1">
-      <span className="flex flex-none flex-col leading-tight" aria-label={`Ronda ${s.round} de ${s.rounds}, nivel ${levelName(s.round)}`}>
+      <span className="flex flex-none flex-col leading-tight" aria-label={`Ronda ${s.round} de ${s.rounds}`}>
         <span className="font-display text-xs text-yellow sm:text-base">
           <span className="hidden sm:inline">RONDA </span>
           <span className="sm:hidden">R</span>
           {s.round}/{s.rounds}
         </span>
-        <span className="font-display text-[10px] text-mist sm:text-xs">{levelName(s.round)}</span>
       </span>
       <ul
         aria-label="Marcador"

@@ -48,11 +48,11 @@ Cada palabra puede ser un objeto con ayuda para quien no lo conozca, como en Cel
 { "w": "Shakira", "h": "Cantante colombiana", "k": ["Hips Don't Lie", "Waka Waka", "Baile de caderas"], "d": 1 }
 ```
 
-`h` es una línea corta de quién o qué es, `k` son 2 o 3 datos clave y `d` es el nivel (1 fácil, 2 medio, 3 difícil; por defecto 2 si falta). En la tarjeta salen como «PISTA: …», etiquetas y estrellas. Las categorías sin pistas usan la misma forma con solo `w` y `d`. El banco tiene **1000 cartas** (11 categorías), sin repeticiones.
+`h` es una línea corta de quién o qué es, `k` son 2 o 3 datos clave y `d` es el nivel (1 fácil, 2 medio, 3 difícil; por defecto 2 si falta). En la tarjeta salen como «PISTA: …», etiquetas y estrellas. Las categorías sin pistas usan la misma forma con solo `w` y `d`. El banco tiene **1377 cartas** (11 categorías), sin repeticiones.
 
-### Niveles por ronda
+### Dificultad al azar
 
-Todas las cartas entran al mazo en cada ronda; cambia el orden. **Ronda 1** reparte primero las de nivel 1 (luego 2 y 3 como respaldo), **ronda 2** empieza por las de nivel 2 y **ronda 3 en adelante** por las de nivel 3. Así nadie ve una carta difícil al arrancar y nunca se acaba el mazo. El nivel de la ronda se muestra en el marcador y en la tarjeta de «¡EMPEZAR!».
+Todas las cartas entran al mazo y se barajan juntas: fáciles, medias y difíciles salen mezcladas, sin importar la ronda. Cada carta muestra sus estrellas (`d`). Las cartas ya jugadas no vuelven a salir hasta que el mazo se agota, y con 1377 cartas casi no hay repetición en partidas de 3 a 5 equipos.
 
 ### Géneros y dificultad (Música)
 

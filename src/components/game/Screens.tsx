@@ -8,7 +8,6 @@ import {
   cat,
   currentCard,
   isLastTurn,
-  levelName,
   ranking,
   teamColor,
   teamLabel,
@@ -114,7 +113,7 @@ function ReadyCard({ s, dispatch, sheet = false }: P & { sheet?: boolean }) {
         {mezcla ? `${n} ${n === 1 ? 'categoría' : 'categorías'}` : c.name}
       </p>
       <span className="mt-2 inline-block bg-ink px-2 py-0.5 font-display text-xs text-yellow">
-        RONDA {s.round} · NIVEL {levelName(s.round)}
+        RONDA {s.round} · DIFICULTAD AL AZAR
       </span>
       <p className="mt-2 mb-0 text-[15px] font-bold sm:text-base">
         {mezcla
