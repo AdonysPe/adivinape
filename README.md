@@ -52,7 +52,7 @@ Cada palabra puede ser un objeto con ayuda para quien no lo conozca, como en Cel
 
 ### Niveles por ronda
 
-El mazo sube de nivel automáticamente: **ronda 1** saca cartas de nivel 1, **ronda 2** prioriza las de nivel 2 (con las de nivel 1 como respaldo) y **ronda 3 en adelante** prioriza las de nivel 3 y baja a los niveles anteriores si se agotan. Así nadie ve una carta difícil en la primera ronda y no se queda sin mazo. El nivel de la ronda se muestra en el marcador y en la tarjeta de «¡EMPEZAR!».
+Todas las cartas entran al mazo en cada ronda; cambia el orden. **Ronda 1** reparte primero las de nivel 1 (luego 2 y 3 como respaldo), **ronda 2** empieza por las de nivel 2 y **ronda 3 en adelante** por las de nivel 3. Así nadie ve una carta difícil al arrancar y nunca se acaba el mazo. El nivel de la ronda se muestra en el marcador y en la tarjeta de «¡EMPEZAR!».
 
 ### Géneros y dificultad (Música)
 

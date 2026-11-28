@@ -57,17 +57,13 @@ export const roundTier = (round: number): 1 | 2 | 3 => (round <= 1 ? 1 : round =
 export const LEVEL_NAMES = ['', 'FÁCIL', 'MEDIA', 'DIFÍCIL'] as const;
 export const levelName = (round: number) => LEVEL_NAMES[roundTier(round)];
 
-/**
- * Order the cards so a round leads with its own level and falls back to easier
- * ones when that tier runs out. Never promotes a harder card into an early round.
- */
+/** Order of levels a round draws from: its own first, then the nearest ones. Every card stays in the pool. */
+const TIER_ORDER: Record<1 | 2 | 3, number[]> = { 1: [1, 2, 3], 2: [2, 1, 3], 3: [3, 2, 1] };
+const rank = (c: Card, round: number) => TIER_ORDER[roundTier(round)].indexOf(c.d ?? 2);
+
+/** Whole pool, shuffled, with the round's own level first and the rest behind as backup. */
 function forRound(cards: Card[], round: number): Card[] {
-  const tier = roundTier(round);
-  const groups = [1, 2, 3].map((d) => shuffle(cards.filter((x) => (x.d ?? 2) === d)));
-  if (tier === 1) return groups[0].length ? groups[0] : cards;
-  const order = tier === 2 ? [1, 0] : [2, 1, 0];
-  const out = order.flatMap((i) => groups[i]);
-  return out.length ? out : cards; // e.g. Música en modo Fácil: only level 1 exists
+  return shuffle(cards).sort((x, y) => rank(x, round) - rank(y, round));
 }
 
 /** Every card a category can ever deal, ignoring filters (for counts and examples on the landing). */
@@ -164,7 +160,8 @@ export function buildDeck(
     pool.forEach((x) => delete nextUsed[cardKey(x)]);
     fresh = pool;
   }
-  return { deck: shuffle(fresh), used: nextUsed };
+  // Lead with the round's level, keep the rest as backup (stable sort keeps the shuffle inside each level).
+  return { deck: shuffle(fresh).sort((x, y) => rank(x, round) - rank(y, round)), used: nextUsed };
 }
 
 /** Rotation (deg) that lands segment `j` of `n` under the top pointer, at least `turns` full spins past `from`. */
